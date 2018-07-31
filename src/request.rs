@@ -1,6 +1,7 @@
 use std::{io, slice, str, fmt};
 
 use bytes::BytesMut;
+use jetscii;
 
 use httparse;
 
@@ -43,6 +44,13 @@ impl Request {
     fn slice(&self, slice: &Slice) -> &[u8] {
         &self.data[slice.0..slice.1]
     }
+
+    pub fn body(&self) -> Option<&[u8]> {
+        jetscii::ByteSubstring::new(b"\r\n\r\n").find(self.data()).map(|i| {
+            &self.data()[(i+4)..]
+        })
+    }
+
     pub fn data(&self) -> &[u8] {
         &self.data[..]
     }

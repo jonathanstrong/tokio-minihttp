@@ -15,6 +15,7 @@ tokio-core = "0.1.0"
 tokio-io = "0.1"
 tokio-proto = "0.1"
 tokio-service = "0.1"
+jetscii = "0.4.2"
 
 [dev-dependencies]
 rustc-serialize = "0.3"
