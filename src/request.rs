@@ -43,6 +43,9 @@ impl Request {
     fn slice(&self, slice: &Slice) -> &[u8] {
         &self.data[slice.0..slice.1]
     }
+    pub fn data(&self) -> &[u8] {
+        &self.data[..]
+    }
 }
 
 impl fmt::Debug for Request {
@@ -88,7 +91,7 @@ pub fn decode(buf: &mut BytesMut) -> io::Result<Option<Request>> {
         path: path,
         version: version,
         headers: headers,
-        data: buf.split_to(amt),
+        data: buf.take(), //.split_to(amt),
     }.into())
 }
 
